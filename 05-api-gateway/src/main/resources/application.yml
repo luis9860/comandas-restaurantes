@@ -1,0 +1,114 @@
+# =============================================================================
+# API Gateway — Punto de entrada único (puerto 8080)
+# Depende de: Eureka (8761). Enruta a microservicios vía lb://
+# Swagger UI: http://localhost:8080/swagger-ui.html
+# =============================================================================
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          # CORS para el frontend Angular
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allowedOriginPatterns:
+                  - "http://localhost:*"
+                  - "http://127.0.0.1:*"
+                  - "http://*.vps.ovh.net"
+                  - "http://vps-7cec165e.vps.ovh.net"
+                allowedMethods:
+                  - GET
+                  - POST
+                  - PUT
+                  - PATCH
+                  - DELETE
+                  - OPTIONS
+                allowedHeaders: "*"
+                allowCredentials: true
+          routes:
+            - id: producto-service
+              uri: lb://producto-service
+              predicates:
+                - Path=/api/productos/**
+              filters:
+                - StripPrefix=1
+
+            - id: pedido-service
+              uri: lb://pedido-service
+              predicates:
+                - Path=/api/pedidos/**
+              filters:
+                - StripPrefix=1
+
+            - id: pedido-mesas
+              uri: lb://pedido-service
+              predicates:
+                - Path=/api/mesas/**
+              filters:
+                - StripPrefix=1
+
+            - id: pedido-comandas
+              uri: lb://pedido-service
+              predicates:
+                - Path=/api/comandas/**
+              filters:
+                - StripPrefix=1
+
+            - id: pedido-lineas
+              uri: lb://pedido-service
+              predicates:
+                - Path=/api/lineas/**
+              filters:
+                - StripPrefix=1
+
+            - id: pedido-mozo
+              uri: lb://pedido-service
+              predicates:
+                - Path=/api/mozo/**
+              filters:
+                - StripPrefix=1
+
+            - id: auth-service
+              uri: lb://auth-service
+              predicates:
+                - Path=/api/auth/**
+              filters:
+                - StripPrefix=1
+
+            - id: publico
+              uri: lb://pedido-service
+              predicates:
+                - Path=/api/publico/**
+              filters:
+                - StripPrefix=1
+
+# JWT compartido con auth-service (override en prod: JWT_SECRET)
+auth:
+  jwt:
+    secret: ${JWT_SECRET:comandas-cibertec-mvp-secret-key-2026-min-32-chars}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html

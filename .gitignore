@@ -1,0 +1,44 @@
+# Maven / Java
+**/target/
+*.jar
+*.war
+*.class
+hs_err_pid*
+replay_pid*
+
+# Node / Angular
+**/node_modules/
+**/.angular/cache/
+**/dist/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs y locales
+*.log
+.env
+.env.*
+!.env.example
+
+# Secretos (nunca subir)
+**/application-local.yml
+**/application-prod.yml
+*.pem
+*.key
+id_rsa*
+scripts/comandas.env
+comandas.env
+
+# Copia anidada del repo (no versionar)
+spring-cloud-demo/
+
+# Cursor / assets temporales del agente
+.cursor/

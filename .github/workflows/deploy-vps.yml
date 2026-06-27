@@ -1,0 +1,38 @@
+# Despliegue automático al VPS (requiere Secrets en GitHub)
+# Settings → Secrets and variables → Actions → VPS_HOST, VPS_USER, VPS_SSH_KEY
+# Sin Secrets este job falla: es normal hasta tener el VPS listo.
+# También puedes lanzarlo manualmente: Actions → Deploy to VPS → Run workflow
+
+name: Deploy to VPS
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # Deploy automático en push solo si creas la variable de repo VPS_DEPLOY_ENABLED=true
+    # (Settings → Secrets and variables → Actions → Variables)
+    if: github.event_name == 'workflow_dispatch' || vars.VPS_DEPLOY_ENABLED == 'true'
+    steps:
+      - name: Desplegar por SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST || vars.VPS_HOST }}
+          username: ${{ secrets.VPS_USER || vars.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY || vars.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT || vars.VPS_PORT || 22 }}
+          script: |
+            set -e
+            APP_DIR="${{ secrets.VPS_APP_DIR || vars.VPS_APP_DIR || '/opt/comandas/spring-cloud-demo' }}"
+            cd "$APP_DIR"
+            git fetch origin
+            git reset --hard origin/main
+            chmod +x scripts/deploy-vps.sh scripts/setup-mysql-vps.sh
+            if [ ! -f /etc/comandas/comandas.env ]; then
+              echo "==> Primera vez: configurar MySQL en VPS..."
+              ./scripts/setup-mysql-vps.sh
+            fi
+            ./scripts/deploy-vps.sh

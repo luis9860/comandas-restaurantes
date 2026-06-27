@@ -1,0 +1,154 @@
+.qr-card {
+  max-width: 640px;
+}
+
+.linea-comensal-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--border, #e2e8f0);
+}
+
+.lineas-comensal li.en-cola {
+  border-left: 4px solid #f59e0b;
+}
+
+.turno-cola {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: #f59e0b;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.intro {
+  text-align: center;
+}
+
+.modo-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 2px solid var(--border, #e2e8f0);
+  background: #fff;
+  cursor: pointer;
+}
+
+.modo-card:hover {
+  border-color: #93c5fd;
+  background: #f8fafc;
+}
+
+.modo-card.app {
+  border-color: #bfdbfe;
+}
+
+.modo-card.invitado {
+  border-color: #d1fae5;
+}
+
+.modo-icon {
+  font-size: 1.75rem;
+}
+
+.app-download {
+  padding: 1rem;
+  border-radius: 10px;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+}
+
+.store-btn {
+  display: inline-block;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: #1e293b;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.store-btn:hover {
+  background: #334155;
+  color: #fff;
+}
+
+.aviso-fisico {
+  padding: 0.75rem;
+  background: #f8fafc;
+  border-radius: 8px;
+}
+
+.tag-silla {
+  font-weight: 700;
+  min-width: 3.5rem;
+  font-size: 0.85rem;
+  color: #334155;
+}
+
+.mesa-bloque {
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 10px;
+  padding: 0.75rem;
+  background: #fff;
+}
+
+.mesa-bloque-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.producto {
+  flex: 1 1 120px;
+  font-weight: 500;
+  min-width: 0;
+}
+
+.estado-LISTA { background: #d4edda; }
+.estado-ENVIADA { background: #fff3cd; }
+.estado-EN_PREPARACION { background: #cce5ff; }
+.estado-ENTREGADA { background: #e2e8f0; }
+.estado-BORRADOR { background: #f3f4f6; color: #374151; }
+
+.lineas-comensal li.borrador {
+  border-style: dashed;
+  opacity: 0.95;
+}
+
+.staff-link {
+  font-size: 0.85rem;
+}
+
+.touch-target {
+  min-height: 44px;
+}
+
+.touch-target-sm {
+  min-height: 38px;
+}
+
+@media (max-width: 575.98px) {
+  .linea-comensal-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .producto {
+    width: 100%;
+  }
+}

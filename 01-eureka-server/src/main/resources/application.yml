@@ -1,0 +1,27 @@
+# =============================================================================
+# Eureka Server — Service Discovery (puerto 8761)
+# Arrancar PRIMERO antes que cualquier microservicio cliente.
+# =============================================================================
+
+server:
+  port: 8761
+
+spring:
+  application:
+    name: eureka-server
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    # Standalone: el servidor no se registra ni consume el registry
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

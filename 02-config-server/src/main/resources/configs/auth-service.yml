@@ -1,0 +1,5 @@
+# Comandas de Restaurantes — auth-service
+# JWT: no definir secret aqui (Config Server pisaria JWT_SECRET del VPS).
+auth:
+  jwt:
+    expiration-hours: 12

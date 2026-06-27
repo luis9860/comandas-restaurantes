@@ -1,0 +1,25 @@
+# =============================================================================
+# Config Server — Configuración centralizada (puerto 8888)
+# Arrancar SEGUNDO, después de Eureka.
+# Perfil native: lee YAML desde classpath:/configs/
+# =============================================================================
+
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/configs/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
